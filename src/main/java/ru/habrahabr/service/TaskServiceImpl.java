@@ -2,6 +2,7 @@ package ru.habrahabr.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.habrahabr.DateUtil;
 import ru.habrahabr.entity.Task;
 import ru.habrahabr.repository.TaskRepository;
 
@@ -35,8 +36,8 @@ public class TaskServiceImpl implements TaskService {
      */
     @PostConstruct
     public void generateTestData() {
-        save(new Task("Иван Иванов", "+123456789", "ivan@ivan.ov"));
-        save(new Task("Петр Петров", "+987654321", "petr@pe.tr"));
+        save(new Task("Do one work", "One desc", DateUtil.getCurrentDate(), "Tel number 1"));
+        save(new Task("Do second work", "Two desc", DateUtil.getCurrentDate(), "Tel number 2"));
     }
 
     @Override

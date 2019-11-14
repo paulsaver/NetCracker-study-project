@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * Класс, аналогичный классу {@link Task} за тем исключением,
@@ -26,20 +27,24 @@ public class TaskWithProperties implements Serializable {
     @Column
     private StringProperty name = new SimpleStringProperty();
 
-    @Column(unique = true)
-    private StringProperty phone = new SimpleStringProperty();
+    @Column
+    private StringProperty desc = new SimpleStringProperty();
 
-    @Column(unique = true)
-    private StringProperty email = new SimpleStringProperty();
+    @Column
+    private StringProperty date = new SimpleStringProperty();
+
+    @Column
+    private StringProperty contacts = new SimpleStringProperty();
 
     public TaskWithProperties() {
     }
 
-    public TaskWithProperties(Long id, String name, String phone, String email) {
+    public TaskWithProperties(Long id, String name, String desc, String date, String contacts) {
         setId(id);
         setName(name);
-        setPhone(phone);
-        setEmail(email);
+        setDesc(desc);
+        setDate(date);
+        setContacts(contacts);
     }
 
     @Id
@@ -68,27 +73,39 @@ public class TaskWithProperties implements Serializable {
         this.name.set(name);
     }
 
-    public String getPhone() {
-        return phone.get();
+    public String getDesc() {
+        return desc.get();
     }
 
-    public StringProperty phoneProperty() {
-        return phone;
+    public StringProperty descProperty() {
+        return desc;
     }
 
-    public void setPhone(String phone) {
-        this.phone.set(phone);
+    public String getDate() {
+        return date.get();
     }
 
-    public String getEmail() {
-        return email.get();
+    public StringProperty dateProperty() {
+        return date;
     }
 
-    public StringProperty emailProperty() {
-        return email;
+    public void setDate(String date) {
+        this.date.set(date);
     }
 
-    public void setEmail(String email) {
-        this.email.set(email);
+    public void setDesc(String desc) {
+        this.desc.set(desc);
+    }
+
+    public String getContacts() {
+        return contacts.get();
+    }
+
+    public StringProperty contactsProperty() {
+        return contacts;
+    }
+
+    public void setContacts(String contacts) {
+        this.contacts.set(contacts);
     }
 }

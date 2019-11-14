@@ -1,5 +1,6 @@
 package ru.habrahabr.ui;
 
+import com.jfoenix.controls.JFXDatePicker;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,10 +10,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import ru.habrahabr.DateUtil;
 import ru.habrahabr.entity.Task;
 import ru.habrahabr.service.TaskService;
 
 import javax.annotation.PostConstruct;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -31,8 +37,9 @@ public class MainController {
     // Инъекции JavaFX
     @FXML private TableView<Task> table;
     @FXML private TextField txtName;
-    @FXML private TextField txtPhone;
-    @FXML private TextField txtEmail;
+    @FXML private TextField txtDesc;
+    @FXML private TextField txtContacts;
+    @FXML private JFXDatePicker datePicker;
 
     // Variables
     private ObservableList<Task> data;
@@ -52,7 +59,7 @@ public class MainController {
      */
     @FXML
     public void initialize() {
-        // Этап инициализации JavaFX
+        datePicker.setValue(DateUtil.getCurrentDate());
     }
 
     /**
@@ -68,16 +75,19 @@ public class MainController {
         TableColumn<Task, String> idColumn = new TableColumn<>("ID");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 
-        TableColumn<Task, String> nameColumn = new TableColumn<>("Имя");
+        TableColumn<Task, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        TableColumn<Task, String> phoneColumn = new TableColumn<>("Телефон");
-        phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
+        TableColumn<Task, String> descColumn = new TableColumn<>("Description");
+        descColumn.setCellValueFactory(new PropertyValueFactory<>("desc"));
 
-        TableColumn<Task, String> emailColumn = new TableColumn<>("E-mail");
-        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+        TableColumn<Task, String> dateColumn = new TableColumn<>("Date");
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
 
-        table.getColumns().setAll(idColumn, nameColumn, phoneColumn, emailColumn);
+        TableColumn<Task, String> contactsColumn = new TableColumn<>("Contacts");
+        contactsColumn.setCellValueFactory(new PropertyValueFactory<>("contacts"));
+
+        table.getColumns().setAll(idColumn, nameColumn, descColumn, dateColumn, contactsColumn);
 
         // Данные таблицы
         table.setItems(data);
@@ -90,19 +100,21 @@ public class MainController {
     @FXML
     public void addContact() {
         String name = txtName.getText();
-        String phone = txtPhone.getText();
-        String email = txtEmail.getText();
-        if (StringUtils.isEmpty(name) || StringUtils.isEmpty(phone) || StringUtils.isEmpty(email)) {
+        String desc = txtDesc.getText();
+        String contacts = txtContacts.getText();
+        String date = datePicker.getValue().toString();
+        if (StringUtils.isEmpty(name) || StringUtils.isEmpty(desc) || StringUtils.isEmpty(contacts) || StringUtils.isEmpty(date)) {
             return;
         }
 
-        Task task = new Task(name, phone, email);
+        Task task = new Task(name, desc, datePicker.getValue(), contacts);
         taskService.save(task);
         data.add(task);
 
         // чистим поля
         txtName.setText("");
-        txtPhone.setText("");
-        txtEmail.setText("");
+        txtDesc.setText("");
+        txtContacts.setText("");
+        datePicker.setValue(DateUtil.getCurrentDate());
     }
 }
