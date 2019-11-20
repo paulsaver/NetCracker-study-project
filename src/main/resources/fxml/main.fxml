@@ -6,32 +6,49 @@
 <?import com.jfoenix.controls.JFXTimePicker?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="405.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.habrahabr.ui.MainController">
-   <children>
-      <TableView fx:id="table" editable="true" prefHeight="200.0" prefWidth="405.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-          <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY" /></columnResizePolicy>
-      </TableView>
-      <HBox alignment="CENTER" layoutX="21.0" layoutY="207.0" prefHeight="50.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
-         <children>
-            <JFXTextField fx:id="txtName" promptText="Задача">
-               <HBox.margin>
-                  <Insets right="3.0" />
-               </HBox.margin>
-            </JFXTextField>
-            <JFXTextField fx:id="txtDesc" promptText="Описание">
-               <HBox.margin>
-                  <Insets right="3.0" />
-               </HBox.margin>
-            </JFXTextField>
-            <JFXTextField fx:id="txtContacts" promptText="Контакты">
-               <HBox.margin>
-                  <Insets right="3.0" />
-               </HBox.margin>
-            </JFXTextField>
-            <JFXDatePicker fx:id="datePicker"/>
-            <JFXTimePicker fx:id="timePicker"/>
-            <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#addContact" text="Добавить" />
-         </children>
-      </HBox>
-   </children>
-</AnchorPane>
+<?import com.jfoenix.controls.JFXTabPane?>
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+           prefWidth="505.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="ru.habrahabr.ui.MainController">
+<JFXTabPane fx:id="tabContainer" prefHeight="300.0" prefWidth="500.0" side="TOP" tabClosingPolicy="UNAVAILABLE">
+   <tabs>
+      <Tab fx:id="taskList" closable="false" text="Task list">
+         <content>
+            <AnchorPane fx:id="taskListContainer" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <TableView fx:id="table" editable="true" prefHeight="200.0" prefWidth="405.0" tableMenuButtonVisible="true"
+                          AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                          AnchorPane.topAnchor="0.0">
+                  <columnResizePolicy>
+                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                  </columnResizePolicy>
+               </TableView>
+               <HBox alignment="CENTER" layoutX="21.0" layoutY="207.0" prefHeight="50.0" prefWidth="300.0"
+                     AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                  <JFXTextField fx:id="txtName" promptText="Задача">
+                     <HBox.margin>
+                        <Insets right="3.0"/>
+                     </HBox.margin>
+                  </JFXTextField>
+                  <JFXTextField fx:id="txtDesc" promptText="Описание">
+                     <HBox.margin>
+                        <Insets right="3.0"/>
+                     </HBox.margin>
+                  </JFXTextField>
+                  <JFXTextField fx:id="txtContacts" promptText="Контакты">
+                     <HBox.margin>
+                        <Insets right="3.0"/>
+                     </HBox.margin>
+                  </JFXTextField>
+                  <JFXDatePicker fx:id="datePicker"/>
+                  <JFXTimePicker fx:id="timePicker"/>
+                  <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#addContact" text="Добавить"/>
+                  <Button minWidth="-Infinity" onAction="#deleteContact" text="Удалить"/>
+               </HBox>
+            </AnchorPane>
+         </content>
+      </Tab>
+      <Tab fx:id="comingUp" closable="false" text="Coming Up">
+      </Tab>
+   </tabs>
+</JFXTabPane>
+</StackPane>

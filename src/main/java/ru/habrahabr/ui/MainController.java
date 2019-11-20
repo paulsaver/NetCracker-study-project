@@ -1,6 +1,7 @@
 package ru.habrahabr.ui;
 
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXTimePicker;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,10 +16,8 @@ import ru.habrahabr.entity.Task;
 import ru.habrahabr.service.TaskService;
 
 import javax.annotation.PostConstruct;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -40,6 +39,7 @@ public class MainController {
     @FXML private TextField txtDesc;
     @FXML private TextField txtContacts;
     @FXML private JFXDatePicker datePicker;
+    @FXML private JFXTimePicker timePicker;
 
     // Variables
     private ObservableList<Task> data;
@@ -60,6 +60,7 @@ public class MainController {
     @FXML
     public void initialize() {
         datePicker.setValue(DateUtil.getCurrentDate());
+        timePicker.setValue(LocalTime.now().plusHours(1));
     }
 
     /**
@@ -107,7 +108,7 @@ public class MainController {
             return;
         }
 
-        Task task = new Task(name, desc, datePicker.getValue(), contacts);
+        Task task = new Task(name, desc, LocalDateTime.of(datePicker.getValue(), timePicker.getValue()), contacts);
         taskService.save(task);
         data.add(task);
 
@@ -116,5 +117,15 @@ public class MainController {
         txtDesc.setText("");
         txtContacts.setText("");
         datePicker.setValue(DateUtil.getCurrentDate());
+    }
+
+    @FXML
+    public void deleteContact() {
+        Task toDelete = table.getSelectionModel().getSelectedItem();
+
+        table.getItems().remove(toDelete);
+
+        taskService.deleteById(toDelete.getId());
+
     }
 }

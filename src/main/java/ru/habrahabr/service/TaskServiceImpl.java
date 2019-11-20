@@ -28,18 +28,6 @@ public class TaskServiceImpl implements TaskService {
         this.repository = repository;
     }
 
-    /**
-     * Метод добавляет парочку записей в БД после запуска приложения,
-     * чтобы не было совсем пусто.
-     *
-     * Из-за того, что подключена H2 (in-memory) БД.
-     */
-    @PostConstruct
-    public void generateTestData() {
-        save(new Task("Do one work", "One desc", DateUtil.getCurrentDate(), "Tel number 1"));
-        save(new Task("Do second work", "Two desc", DateUtil.getCurrentDate(), "Tel number 2"));
-    }
-
     @Override
     public Task save(Task task) {
         return repository.save(task);
@@ -48,5 +36,10 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<Task> findAll() {
         return repository.findAll();
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        repository.delete(id);
     }
 }

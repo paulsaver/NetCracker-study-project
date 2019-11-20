@@ -2,7 +2,7 @@ package ru.habrahabr.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Date: 27.08.15
@@ -26,7 +26,7 @@ public class Task implements Serializable {
     private String desc;
 
     @Column(nullable = false)
-    private LocalDate date;
+    private LocalDateTime date;
 
     @Column(nullable = false)
     private String contacts;
@@ -34,7 +34,7 @@ public class Task implements Serializable {
     public Task() {
     }
 
-    public Task(String name, String desc, LocalDate date, String contacts) {
+    public Task(String name, String desc, LocalDateTime date, String contacts) {
         this.name = name;
         this.desc = desc;
         this.date = date;
@@ -65,11 +65,11 @@ public class Task implements Serializable {
         this.desc = desc;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
